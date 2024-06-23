@@ -42,7 +42,7 @@ os.chdir(download_dir)
 
 existing_video_ids = get_existing_video_ids(download_dir)
 
-url = "https://api.twitch.tv/helix/videos?user_id=892216035&period=month&first=100"
+url = f"https://api.twitch.tv/helix/videos?user_id={os.getenv('DL_USEE_ID')}&period=month&first=100"
 headers = {
     'Client-ID': os.getenv('TWITCH_CLIENT_ID'),
     'Authorization': f'Bearer {os.getenv("TWITCH_AUTH_TOKEN")}'
