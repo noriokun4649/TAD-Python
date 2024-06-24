@@ -3,7 +3,7 @@ import re
 import requests
 import yt_dlp
 from dotenv import load_dotenv
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 
@@ -36,7 +36,7 @@ def stop_workers(executor):
     print("すべてのWorkerを中止しました。")
 
 
-download_dir = os.path.join(os.getcwd(), 'Download')
+download_dir = str(os.getenv('DL_DIR'))
 os.makedirs(download_dir, exist_ok=True)
 os.chdir(download_dir)
 
