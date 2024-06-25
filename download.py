@@ -20,7 +20,10 @@ def fetch_twitch_video_ids(url, headers):
 
 
 def download_video(video_id):
-    ydl_opts = {'format': 'best'}
+    ydl_opts = {
+                    'format': 'best',
+                    'cookiefile': os.getenv('COOKIE_FILE', os.path.join(os.getcwd(), 'cookiefile'))
+                }
     video_url = f'https://www.twitch.tv/videos/{video_id}'
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([video_url])
@@ -36,7 +39,7 @@ def stop_workers(executor):
     print("すべてのWorkerを中止しました。")
 
 
-download_dir = str(os.getenv('DL_DIR'))
+download_dir = str(os.getenv('DL_DIR',os.path.join(os.getcwd(), 'Download')))
 os.makedirs(download_dir, exist_ok=True)
 os.chdir(download_dir)
 
