@@ -52,9 +52,13 @@ headers = {
 }
 
 twitch_video_ids = fetch_twitch_video_ids(url, headers)
+
+print("投稿されているアーカイブ一覧！！！")
+print(twitch_video_ids)
+
 new_video_ids = [video_id for video_id in twitch_video_ids if video_id not in existing_video_ids]
 
-print("未ダウンロードのアーカイブ一覧！！！")
+print("\n未ダウンロードのアーカイブ一覧！！！")
 print(new_video_ids)
 print(f"{len(new_video_ids)}個のアーカイブが未DL")
 
@@ -62,3 +66,5 @@ max_workers = int(os.getenv('MAX_WORKERS', 4))
 
 print(f"\n{max_workers}スレッドで動画ダウンロード開始！！！")
 download_videos_concurrently(new_video_ids, max_workers)
+
+print("\nダウンロード終了！！！")
