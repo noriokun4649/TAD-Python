@@ -51,7 +51,7 @@ def download_videos_concurrently(video_ids, max_workers):
 userid = os.getenv('DL_USER_ID')
 download_dir = os.getenv('DL_DIR',os.path.join(os.getcwd(), 'Download'))
 
-os.makedirs(download_dir, exist_ok=True)C
+os.makedirs(download_dir, exist_ok=True)
 os.chdir(download_dir)
 
 existing_video_ids = get_existing_video_ids(download_dir)
