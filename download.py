@@ -4,6 +4,7 @@ import requests
 import yt_dlp
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 
 load_dotenv()
 
@@ -26,7 +27,7 @@ def fetch_twitch_video_ids(url, headers):
     while True:
         response = requests.get(url, headers=headers)
         data = response.json()
-        video_ids.extend([item['id'] for item in data['data']])
+        video_ids.extend([item['id'] for item in data['data'] if item['type'] != 'live'])
         cursor = data.get('pagination', {}).get('cursor')
         if cursor:
             url = f"{baseurl}&after={cursor}"
@@ -65,7 +66,7 @@ headers = {
 twitch_video_ids = fetch_twitch_video_ids(url, headers)
 user_name = fetch_user_name(userid, headers)
 
-print(f"{user_name}({userid})のダウンロード開始！！！")
+print(f"{user_name}({userid})のダウンロード開始！！！ [{datetime.now()}]")
 
 print(f"\n投稿されているアーカイブ一覧！！！{len(twitch_video_ids)}個！")
 print(twitch_video_ids)
@@ -81,4 +82,4 @@ max_workers = int(os.getenv('MAX_WORKERS', 4))
 print(f"\n{max_workers}スレッドで動画ダウンロード開始！！！")
 download_videos_concurrently(new_video_ids, max_workers)
 
-print("\nダウンロード終了！！！")
+print("\nダウンロード終了！！！\n--------------------------\n")
