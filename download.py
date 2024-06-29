@@ -27,7 +27,7 @@ def fetch_twitch_video_ids(url, headers):
     while True:
         response = requests.get(url, headers=headers)
         data = response.json()
-        video_ids.extend([item['id'] for item in data['data'] if item['type'] != 'live'])
+        video_ids.extend([item['id'] for item in data['data'] if 'vod-secure.twitch.tv/_404/404_processing_' not in item['thumbnail_url']])
         cursor = data.get('pagination', {}).get('cursor')
         if cursor:
             url = f"{baseurl}&after={cursor}"
